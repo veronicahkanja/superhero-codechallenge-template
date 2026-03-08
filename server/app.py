@@ -92,13 +92,23 @@ def get_powers():
 
     return make_response(powers_list, 200)
 
-@app.route('/powers/<int:id>', methods=['GET'])
+@app.route('/powers/<int:id>', methods=['GET', 'PATCH'])
 def get_power_by_id(id):
 
     power = Power.query.get(id)
 
     if not power:
         return make_response({"error": "Power not found"}, 404)
+
+    # PATCH request
+    if request.method == 'PATCH':
+
+        data = request.get_json()
+
+        if "description" in data:
+            power.description = data["description"]
+
+        db.session.commit()
 
     power_data = {
         "id": power.id,
@@ -107,4 +117,3 @@ def get_power_by_id(id):
     }
 
     return make_response(power_data, 200)
-
