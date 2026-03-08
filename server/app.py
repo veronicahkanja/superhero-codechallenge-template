@@ -34,4 +34,8 @@ def get_heroes():
     heroes = Hero.query.all()
 
     heroes_list = []
-    
+
+    for hero in heroes:
+        heroes_list.append({
+            
+        })
