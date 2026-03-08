@@ -26,3 +26,12 @@ def index():
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
+
+
+@app.route('/heroes', methods=['GET'])
+def get_heroes():
+
+    heroes = Hero.query.all()
+
+    heroes_list = []
+    
