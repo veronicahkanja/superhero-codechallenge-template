@@ -45,4 +45,6 @@ def get_heroes():
     return make_response(heroes_list, 200)
 
 @app.route('/heroes/<init:id>', methods=['GET'])
+def get_hero_by_id(id):
 
+    hero = Hero.query.get(id)
