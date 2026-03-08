@@ -74,3 +74,6 @@ def get_hero_by_id(id):
     }
 
     return make_response(hero_data, 200)
+
+
+@app.route('/powers', methods=['GET'])
