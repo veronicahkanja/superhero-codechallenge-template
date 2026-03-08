@@ -82,3 +82,12 @@ def get_powers():
     powers = Power.query.all()
 
     powers_list = []
+
+    for power in powers:
+        powers_list.append({
+            "id": power.id,
+            "name": power.name,
+            "description": power.description
+        })
+
+    return make_response(powers_list, 200)
