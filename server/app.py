@@ -41,3 +41,6 @@ def get_heroes():
             "name": hero.name,
             "super_name": hero.super_name 
         })
+
+    return make_response(heroes_list, 200)
+
