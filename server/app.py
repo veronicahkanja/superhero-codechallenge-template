@@ -52,4 +52,23 @@ def get_hero_by_id(id):
     if not hero:
         return make_response({"error": "Hero not found"}, 404)
     
+    hero_data = {
+        "id": hero.id,
+        "name": hero.name,
+        "super_name": hero.super_name,
+        "hero_powers": [
+            {
+                "id": hp.id,
+                "hero_id": hp.hero_id,
+                "power_id": hp.power_id,
+                "strength": hp.strength,
+                "power": {
+                    "id": hp.power.id,
+                    "name": hp.power.name,
+                    "description": hp.power.description
+                }
+            }
+            for hp in hero.hero_powers
+        ]
+    }
     
