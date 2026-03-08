@@ -100,15 +100,18 @@ def get_power_by_id(id):
     if not power:
         return make_response({"error": "Power not found"}, 404)
 
-    # PATCH request
-    if request.method == 'PATCH':
+    if request.method == "PATCH":
 
         data = request.get_json()
 
-        if "description" in data:
-            power.description = data["description"]
+        try:
+            if "description" in data:
+                power.description = data["description"]
 
-        db.session.commit()
+            db.session.commit()
+
+        except ValueError as e:
+            return make_response({"errors": [str(e)]}, 400)
 
     power_data = {
         "id": power.id,
