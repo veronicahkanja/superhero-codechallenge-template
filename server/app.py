@@ -44,3 +44,5 @@ def get_heroes():
 
     return make_response(heroes_list, 200)
 
+@app.route('/heroes/<init:id>', methods=['GET'])
+
