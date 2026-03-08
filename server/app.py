@@ -77,3 +77,8 @@ def get_hero_by_id(id):
 
 
 @app.route('/powers', methods=['GET'])
+def get_powers():
+
+    powers = Power.query.all()
+
+    powers_list = []
