@@ -48,3 +48,8 @@ def get_heroes():
 def get_hero_by_id(id):
 
     hero = Hero.query.get(id)
+
+    if not hero:
+        return make_response({"error": "Hero not found"}, 404)
+    
+    
