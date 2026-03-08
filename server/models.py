@@ -42,11 +42,29 @@ class Power(db.Model, SerializerMixin):
     name = db.Column(db.String)
     description = db.Column(db.String)
 
-    # add relationship
+    # Relationships
+    hero_powers = db.relationship(
+        "HeroPower",
+        back_populates="power",
+        cascade="all, delete-orphan"
+    )
 
-    # add serialization rules
+    heroes = association_proxy("hero_powers", "hero")
 
-    # add validation
+    # Serialization rules
+    serialize_rules = ("-hero_powers.power",)
+
+    # Validation
+    @validates("description")
+    def validate_description(self, key, description):
+
+        if not description:
+            raise ValueError("Description is required")
+
+        if len(description) < 20:
+            raise ValueError("Description must be at least 20 characters long")
+
+        return description
 
     def __repr__(self):
         return f'<Power {self.id}>'
@@ -56,13 +74,48 @@ class HeroPower(db.Model, SerializerMixin):
     __tablename__ = 'hero_powers'
 
     id = db.Column(db.Integer, primary_key=True)
+
     strength = db.Column(db.String, nullable=False)
 
-    # add relationships
+    hero_id = db.Column(
+        db.Integer,
+        db.ForeignKey('heroes.id')
+    )
 
-    # add serialization rules
+    power_id = db.Column(
+        db.Integer,
+        db.ForeignKey('powers.id')
+    )
 
-    # add validation
+    # Relationships
+    hero = db.relationship(
+        "Hero",
+        back_populates="hero_powers"
+    )
+
+    power = db.relationship(
+        "Power",
+        back_populates="hero_powers"
+    )
+
+    # Serialization rules
+    serialize_rules = (
+        "-hero.hero_powers",
+        "-power.hero_powers",
+    )
+
+    # Validation
+    @validates("strength")
+    def validate_strength(self, key, strength):
+
+        valid_strengths = ["Strong", "Weak", "Average"]
+
+        if strength not in valid_strengths:
+            raise ValueError(
+                "Strength must be 'Strong', 'Weak', or 'Average'"
+            )
+
+        return strength
 
     def __repr__(self):
         return f'<HeroPower {self.id}>'
