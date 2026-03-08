@@ -91,3 +91,20 @@ def get_powers():
         })
 
     return make_response(powers_list, 200)
+
+@app.route('/powers/<int:id>', methods=['GET'])
+def get_power_by_id(id):
+
+    power = Power.query.get(id)
+
+    if not power:
+        return make_response({"error": "Power not found"}, 404)
+
+    power_data = {
+        "id": power.id,
+        "name": power.name,
+        "description": power.description
+    }
+
+    return make_response(power_data, 200)
+
