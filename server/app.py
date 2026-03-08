@@ -71,4 +71,5 @@ def get_hero_by_id(id):
             for hp in hero.hero_powers
         ]
     }
-    
+
+    return make_response(hero_data, 200)
