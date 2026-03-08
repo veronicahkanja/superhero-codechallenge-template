@@ -27,9 +27,9 @@ class Hero(db.Model, SerializerMixin):
 
     powers = association_proxy("hero_powers", "power")
 
-    
 
     # add serialization rules
+    serialize_rules = ("-hero_powers.hero",)
 
     def __repr__(self):
         return f'<Hero {self.id}>'
