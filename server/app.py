@@ -37,5 +37,7 @@ def get_heroes():
 
     for hero in heroes:
         heroes_list.append({
-            
+            "id": hero.id,
+            "name": hero.name,
+            "super_name": hero.super_name 
         })
