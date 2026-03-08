@@ -19,6 +19,15 @@ class Hero(db.Model, SerializerMixin):
     super_name = db.Column(db.String)
 
     # add relationship
+    hero_powers = db.relationship(
+        "HeroPower",
+        back_populates="hero",
+        cascade="all, delete-orphan"
+    )
+
+    powers = association_proxy("hero_powers", "power")
+
+    
 
     # add serialization rules
 
